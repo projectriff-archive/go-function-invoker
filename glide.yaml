@@ -1,0 +1,19 @@
+package: github.com/projectriff/go-function-invoker
+import:
+- package: github.com/golang/protobuf
+  version: ~1.0.0
+  subpackages:
+  - proto
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: google.golang.org/grpc
+  version: ~1.9.2
+- package: github.com/golang/gddo/httputil
+  version: master
+
+testImport:
+- package: github.com/onsi/ginkgo
+  version: v1.4.0
+- package: github.com/onsi/gomega
+  version: v1.3.0
