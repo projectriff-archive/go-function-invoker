@@ -1,4 +1,4 @@
-= Golang Function Invoker image:https://ci.projectriff.io/api/v1/teams/main/pipelines/riff/jobs/build-go-function-invoker-container/badge[Golang Invoker Status, link=https://ci.projectriff.io/teams/main/pipelines/riff/build-go-function-invoker-container/builds/latest]
+= Golang Function Invoker image:https://travis-ci.org/projectriff/go-function-invoker.svg?branch=master["Build Status", link="https://travis-ci.org/projectriff/go-function-invoker"]
 
 == Purpose
 The *go function invoker* provides a Docker base layer for a function built as a https://golang.org/pkg/plugin/[Go plugin].
