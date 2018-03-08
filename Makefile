@@ -2,7 +2,7 @@
 COMPONENT = go-function-invoker
 
 GO_SOURCES = $(shell find cmd pkg -type f -name '*.go')
-TAG = 0.0.5-snapshot
+TAG ?= $(shell cat VERSION)
 
 build: $(COMPONENT)
 
@@ -29,7 +29,14 @@ clean:
 	rm -f $(OUTPUT)
 
 dockerize: $(GO_SOURCES) vendor
+	docker build . -t projectriff/$(COMPONENT):latest --build-arg COMPONENT=go-function-invoker
 	docker build . -t projectriff/$(COMPONENT):$(TAG) --build-arg COMPONENT=go-function-invoker
 
 debug-dockerize: $(GO_SOURCES) vendor
+	docker build . -t projectriff/$(COMPONENT):latest --build-arg COMPONENT=go-function-invoker -f Dockerfile-debug
 	docker build . -t projectriff/$(COMPONENT):$(TAG) --build-arg COMPONENT=go-function-invoker -f Dockerfile-debug
+
+docker-publish: dockerize
+	docker tag "projectriff/$(COMPONENT):latest" "projectriff/$(COMPONENT):$(TAG)-ci-$(TRAVIS_COMMIT)"
+	docker login -u '$(DOCKER_USERNAME)' -p '$(DOCKER_PASSWORD)'
+	docker push "projectriff/$(COMPONENT)"
