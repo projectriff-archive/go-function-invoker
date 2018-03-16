@@ -8,7 +8,7 @@ jobs:
       sudo: required
       services:
       - docker
-      script: ./.travis.docker-publish.sh
+      script: ./.travis.docker-push.sh
     - stage: fats
       script: "curl -s -L https://github.com/projectriff/fats/raw/master/.travis.fats-trigger.sh | bash"
 stages:
