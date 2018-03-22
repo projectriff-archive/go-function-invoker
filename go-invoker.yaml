@@ -1,0 +1,27 @@
+---
+apiVersion: projectriff.io/v1
+kind: Invoker
+metadata:
+  name: go
+spec:
+  version: 0.0.6-snapshot
+  matchers:
+  - "*.so"
+  properties:
+    function:
+      protocol: grpc
+  files:
+  - path: Dockerfile
+    template: |
+      FROM projectriff/go-function-invoker:{{.InvokerVersion}}
+      ADD {{.Artifact}} /
+      ENV FUNCTION_URI file:///{{.ArtifactBase}}?handler={{.Handler}}
+  doc: |
+    {{.Process}} the function based on a shared '.so' library file specified as the filename
+    and exported symbol name specified as the handler.
+    
+    For example, type:
+    
+        riff {{.Command}} -i words -l go -n rot13 --handler=Encode
+    
+    to {{.Result}}.
