@@ -7,11 +7,11 @@ spec:
   version: 0.0.2-snapshot
   matchers:
   - "*.so"
-  properties:
-    handler:
-      default: "{{ .TitleCase .FunctionName }}"
-      description: the name of the function handler (name of Exported go function)
-    function:
+  handler:
+    default: "{{ .TitleCase .FunctionName }}"
+    description: the name of the function handler (name of Exported go function)
+  functionTemplate:
+    spec:
       protocol: grpc
   files:
   - path: Dockerfile
