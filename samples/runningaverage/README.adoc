@@ -1,0 +1,83 @@
+= runningaverage
+
+[horizontal]
+*Invoker*:: go
+*Function*:: link:runningaverage.go[runningaverage.go]
+*Input*:: numbers
+
+=== prerequisites
+
+1. riff is deployed
+2. the `riff` CLI is on your PATH
+3. the go invoker is installed
+
+    riff invokers apply -f https://github.com/projectriff/go-function-invoker/raw/master/go-invoker.yaml
+
+4. the working directory is `samples/runningaverage`
+
+=== compile the Go code and build the .so file
+This compiles the source `*.go` file as a go https://golang.org/pkg/plugin/[plugin].
+
+[NOTE]
+====
+This is done in a container, using linux, because cross-compiling go plugins is hard. But in a nutshell, it does this
+[source, bash]
+----
+go build -buildmode=plugin -o runningaverage.so runningaverage.go
+----
+====
+
+[source, bash]
+----
+make runningaverage.so
+----
+
+=== create the function and its input topic
+
+```
+riff create go --input numbers --output runningaverage --artifact runningaverage.so --handler RunningAverage
+```
+
+=== make sure that the function is not configured for windowing
+
+Recent builds of the riff CLI configure functions with a windowing size of 1. Check `runningaverage-function.yaml` and comment out the windowing size if necessary.
+
+```yaml
+  # windowing:
+    # size: 1
+```
+
+If you made a change to the yaml, reapply the config.
+
+```sh
+riff apply
+```
+
+=== tail the output topic and publish messages
+
+In a terminal window:
+```
+topics tail -n runningaverage
+```
+The `topics` script can be found in the root of the https://github.com/projectriff/riff[riff] repo.
+
+In a different terminal window:
+```
+for i in {1..5}; do riff publish --input numbers --data $i; done
+```
+
+If your function is not scaled to zero between events, and assuming no windowing of the input stream, your output should resemble the following:
+```
+ Content-Type["text/plain"]1
+ Content-Type["text/plain"]1.5
+ Content-Type["text/plain"]2
+ Content-Type["text/plain"]2.5
+ Content-Type["text/plain"]3
+```
+
+=== delete the function and its input topic
+
+[source, bash]
+----
+riff delete --all
+----
