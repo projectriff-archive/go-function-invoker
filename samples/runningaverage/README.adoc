@@ -5,7 +5,7 @@
 *Function*:: link:runningaverage.go[runningaverage.go]
 *Input*:: numbers
 
-=== prerequisites
+=== Prerequisites
 
 1. riff is deployed
 2. the `riff` CLI is on your PATH
@@ -15,7 +15,7 @@
 
 4. the working directory is `samples/runningaverage`
 
-=== compile the Go code and build the .so file
+=== Compile the Go code and build the .so file
 This compiles the source `*.go` file as a go https://golang.org/pkg/plugin/[plugin].
 
 [NOTE]
@@ -32,13 +32,13 @@ go build -buildmode=plugin -o runningaverage.so runningaverage.go
 make runningaverage.so
 ----
 
-=== create the function and its input topic
+=== Create the function and its input topic
 
 ```
 riff create go --input numbers --output runningaverage --artifact runningaverage.so --handler RunningAverage
 ```
 
-=== make sure that the function is not configured for windowing
+=== Make sure that the function is not configured for windowing
 
 Recent builds of the riff CLI configure functions with a windowing size of 1. Check `runningaverage-function.yaml` and comment out the windowing size if necessary.
 
@@ -53,7 +53,7 @@ If you made a change to the yaml, reapply the config.
 riff apply
 ```
 
-=== tail the output topic and publish messages
+=== Tail the output topic and publish messages
 
 In a terminal window:
 ```
@@ -75,7 +75,7 @@ If your function is not scaled to zero between events, and assuming no windowing
  Content-Type["text/plain"]3
 ```
 
-=== delete the function and its input topic
+=== Delete the function and its input topic
 
 [source, bash]
 ----
