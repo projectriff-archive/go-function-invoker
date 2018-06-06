@@ -40,7 +40,7 @@ riff create go --input numbers --output runningaverage --artifact runningaverage
 
 === Make sure that the function is not configured for windowing
 
-Recent builds of the riff CLI configure functions with a windowing size of 1. Check `runningaverage-function.yaml` and comment out the windowing size if necessary.
+Recent builds of the riff CLI configure functions with a windowing size of 1. Check `runningaverage-link.yaml` and comment out the windowing size if necessary.
 
 ```yaml
   # windowing:
