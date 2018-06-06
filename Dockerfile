@@ -12,7 +12,7 @@ RUN go build -o /riff-entrypoint cmd/${COMPONENT}.go
 
 ###########
 
-FROM golang:1.10
+FROM debian:wheezy-slim
 
 # The following line forces the creation of a /tmp directory
 WORKDIR /tmp
